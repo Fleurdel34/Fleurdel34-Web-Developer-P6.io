@@ -1,4 +1,15 @@
 const express = require('express');
+const mongoose = require('mongoose');
+require('dotenv').config();
+const routes = require('./routes/routes');
+const routesAuth = require('./routes/routesAuth');
+const path = require('path');
+                   
+mongoose.connect('mongodb+srv://process.env.UER_SECRET:process.env.PASSWORD_SECRET@process.env.URL_SECRET.mongodb.net/?retryWrites=true&w=majority',
+  { useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
 
@@ -11,34 +22,10 @@ app.use((req, res, next) => {
     next();
   });
 
-  app.get('/api/data', (req, res, next) => {
-    console.log(req.body);
-    res.status(201).json({
-        message:'objet créé'
-    });
-  });
 
+app.use('/api/sauces', routes);
+app.use('/api/auth', routesAuth);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
-  app.get('/api/root', (req, res, next) => {
-    const data = [
-      {
-        userId:'test',
-        name:'test',
-        manufacturer:'test',
-        description:'test',
-        mainPepper:'test',
-        imageUrl:'test',
-        heat:'test',
-        likes:'test',
-        dislikes:'test',
-        usersLiked:'test',
-        usersDisliked:'test'
-        
-      },
-      
-    ];
-    res.status(200).json(data);
-  });
 module.exports = app;
 
-const mongoose = require('mongoose');
