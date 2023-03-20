@@ -16,6 +16,7 @@ exports.signup = (req, res, next) => {
                 .catch(error => res.status(400).json({error}));
         })
         .catch(error => res.status(500).json({error}));
+    
 };
 
 
@@ -31,7 +32,7 @@ exports.login = (req, res, next) => {
                         res.satus(401).json({message:'Identifiant ou mot de passe incorrect'});
                     }else{
                         res.satus(200).json({
-                            userId: auth._Id,
+                            userId: auth._id,
                             token: tockenCtl.sign(
                                  {userId: auth._id },
                                 'RANDOM_TOKEN_KEY',
