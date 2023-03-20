@@ -1,9 +1,8 @@
 const express = require('express');
-const auth = require('auth');
 const router = express.Router();
+
 const multer= require('../middleware/multer-config');
-
-
+const auth = require('../middleware/middlewareAuth');
 const controllers = require('../controleurs/controleurs');
 
 router.post('/', auth, multer, controllers.createSauces);
