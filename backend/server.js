@@ -1,3 +1,5 @@
+/*fonctions: lancer le serveur et l'écouter / gerer des erreurs*/
+
 const http = require('http');
 const app = require('./app');
 
@@ -45,3 +47,4 @@ server.on('listening', () => {
 });
 
 server.listen(port);
+

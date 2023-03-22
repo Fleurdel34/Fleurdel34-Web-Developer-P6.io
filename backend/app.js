@@ -1,3 +1,5 @@
+/*connexion à la base de donnee mongoose via des variables d environnement*/
+
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require("dotenv");

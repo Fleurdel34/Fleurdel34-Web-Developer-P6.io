@@ -1,7 +1,8 @@
-const Sauces = require('../models/sauces');
+const Sauces = require('../models/Sauces');
 const fs = require('fs');
 
-exports.createSauces = (req, res, next) => {
+exports.createSauces = (req, res) => {
+    
    const saucesObject = JSON.parse(req.body.sauces);
    delete saucesObject._id;
    delete saucesObject.userId;
@@ -61,7 +62,7 @@ exports.getAllSauces = (req, res, next) => {
     
 };
 
-exports.getOneSauce = (req, res, next) => {
+exports.getOneSauces = (req, res, next) => {
 
     Sauces.findOne({_id: req.params.id})
         .then(sauces => res.status(200).json(sauces))

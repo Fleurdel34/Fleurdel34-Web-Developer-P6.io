@@ -11,4 +11,4 @@ const authSchema = mongoose.Schema({
 
 authSchema.plugin(uniqueValidator);
 
-module.exports = mongoose.model('auth', authSchema);
+module.exports = mongoose.model('Auth', authSchema);

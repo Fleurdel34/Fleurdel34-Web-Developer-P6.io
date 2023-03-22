@@ -7,8 +7,8 @@ const controllers = require('../controleurs/controleurs');
 
 router.post('/', auth, multer, controllers.createSauces);
 router.put('/:id', auth, multer, controllers.modifySauces);
-router.delete('/:id',auth, controllers.deleteSauces);
+router.delete('/:id', auth, controllers.deleteSauces);
 router.get('/', auth, controllers.getAllSauces);
-router.get('/:id', auth, controllers.getOneSauce);
+router.get('/:id', auth, controllers.getOneSauces);
 
 module.exports = router;

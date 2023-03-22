@@ -1,17 +1,17 @@
-const Auth = require('../models/auth');
+const Auth = require('../models/Auth');
 
 const bcrypt = require('bcrypt');
 
 const tockenCtl = require('jsonwebtoken');
 
-exports.signup = (req, res, next) => {
+exports.signup = (req, res) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash =>{
-            const auth = new Auth ({
+            const user = new Auth ({
                 email: req.body.email,
                 password: hash
             });
-            auth.save()
+            user.save()
                 .then(()=> res.status(201).json({message:'Utilisateur créé'}))
                 .catch(error => res.status(400).json({error}));
         })
@@ -20,25 +20,29 @@ exports.signup = (req, res, next) => {
 };
 
 
-exports.login = (req, res, next) => {
+exports.login = (req, res) => {
     Auth.findOne({email: req.body.email})
-    .then(auth => {
-        if(auth === null){
-            res.satus(401).json({message:'Identifiant ou mot de passe incorrect'})
+    .then(user => {
+        if(user === null){
+            res.status(401).json({message:'Identifiant ou mot de passe incorrect'})
         }else{
-            bcrypt.compare(req.body.password, auth.password)
+            
+            bcrypt.compare(req.body.password, user.password)
                 .then(valid =>{
+    
                     if(!valid){
-                        res.satus(401).json({message:'Identifiant ou mot de passe incorrect'});
+                        res.status(401).json({message:'Identifiant ou mot de passe incorrect'});
                     }else{
-                        res.satus(200).json({
-                            userId: auth._id,
+                        res.status(200).json({
+                            userId: user._id,
                             token: tockenCtl.sign(
-                                 {userId: auth._id },
+                                { userId: user._id },
                                 'RANDOM_TOKEN_KEY',
-                                 {expiresIn: '24h' }
+                                { expiresIn: '24h' }
                             )
+                            
                         })
+                        
                     }
 
                 })
