@@ -1,20 +1,24 @@
+/*Création de l'ensemble des requetes pour les sauces*/
+
 const Sauces = require('../models/Sauces');
 const fs = require('fs');
 
 exports.createSauces = (req, res) => {
-    
-   const saucesObject = JSON.parse(req.body.sauces);
+  
+   const saucesObject = JSON.parse(req.body.sauce);
+   console.log(saucesObject);
    delete saucesObject._id;
-   delete saucesObject.userId;
+   delete saucesObject.userId
    const sauces = new Sauces({
         ...saucesObject,
-        userId: req.body.auth.userId,
-        imageURL: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        userId: req.auth.userId,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
 
    });
-   sauces.save()
+    sauces.save()
         .then(()=>{res.status(201).json({message:'Objet enregistré'})})
         .catch(error => {res.status(400).json({error})});
+    next();
 };
 
 exports.modifySauces =  (req, res, next) => {

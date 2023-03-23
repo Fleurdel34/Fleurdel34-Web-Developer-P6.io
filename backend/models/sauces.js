@@ -1,3 +1,5 @@
+/* creation du model d'authentification via Mongoose*/
+
 const mongoose = require('mongoose');
 
 const saucesSchema = mongoose.Schema({
@@ -9,10 +11,10 @@ const saucesSchema = mongoose.Schema({
     mainPepper:{type: String, required: true},
     imageUrl:{type: String, required: true},
     heat:{type: Number, required: true},
-    likes:{type: Number, required: false},
-    dislikes:{type: Number, required: false},
-    usersLiked:{type: String, required: true},
-    usersDisliked:{type: String, required: true}
+    likes:{type: Number, required: true, default: 0},
+    dislikes:{type: Number, required: true, default: 0},
+    usersLiked:{type: [String], required: true, default: []},
+    usersDisliked:{type: [String], required: true, default: []}
     
 });
 

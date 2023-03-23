@@ -1,3 +1,5 @@
+/* creation du model d'authentification via Mongoose*/
+
 const mongoose = require('mongoose');
 
 const uniqueValidator = require('mongoose-unique-validator');

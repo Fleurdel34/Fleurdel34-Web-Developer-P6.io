@@ -1,3 +1,5 @@
+/*creation du TOKEN*/
+
 const tokenCtl = require('jsonwebtoken');
 
 module.exports= (req, res,next)=>{

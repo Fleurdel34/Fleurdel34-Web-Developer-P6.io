@@ -1,8 +1,10 @@
+/*création des requetes Signup et Login*/
+
 const Auth = require('../models/Auth');
 
 const bcrypt = require('bcrypt');
 
-const tockenCtl = require('jsonwebtoken');
+const tokenCtl = require('jsonwebtoken');
 
 exports.signup = (req, res) => {
     bcrypt.hash(req.body.password, 10)
@@ -35,7 +37,7 @@ exports.login = (req, res) => {
                     }else{
                         res.status(200).json({
                             userId: user._id,
-                            token: tockenCtl.sign(
+                            token: tokenCtl.sign(
                                 { userId: user._id },
                                 'RANDOM_TOKEN_KEY',
                                 { expiresIn: '24h' }
