@@ -6,7 +6,6 @@ const fs = require('fs');
 exports.createSauces = (req, res) => {
   
    const saucesObject = JSON.parse(req.body.sauce);
-   console.log(saucesObject);
    delete saucesObject._id;
    delete saucesObject.userId
    const sauces = new Sauces({
@@ -18,7 +17,7 @@ exports.createSauces = (req, res) => {
     sauces.save()
         .then(()=>{res.status(201).json({message:'Objet enregistré'})})
         .catch(error => {res.status(400).json({error})});
-    next();
+    
 };
 
 exports.modifySauces =  (req, res, next) => {
@@ -41,13 +40,13 @@ exports.modifySauces =  (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.deleteSauces =  (req, res, next) => {
+exports.deleteSauces =  (req, res) => {
     Sauces.findOne({_id: req.params.id})
-        .then((sauces) => {
-            if(sauces.userId != req.auth.userId){
+        .then((sauce) => {
+            if(sauce.userId != req.auth.userId){
                 res.status(403).json({message: 'Non authorisé!'});
             }else{
-                const filename = sauces.imageURL.split('/images/')[1];
+                const filename = sauce.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () =>{
                     Sauces.deleteOne({_id: req.params.id})
                         .then(()=>{res.status(200).json({message:'Objet supprimé'})})
@@ -58,7 +57,7 @@ exports.deleteSauces =  (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-exports.getAllSauces = (req, res, next) => {
+exports.getAllSauces = (req, res) => {
 
     Sauces.find()
         .then( sauces => res.status(200).json(sauces))
@@ -66,7 +65,7 @@ exports.getAllSauces = (req, res, next) => {
     
 };
 
-exports.getOneSauces = (req, res, next) => {
+exports.getOneSauces = (req, res) => {
 
     Sauces.findOne({_id: req.params.id})
         .then(sauces => res.status(200).json(sauces))
