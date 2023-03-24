@@ -20,10 +20,10 @@ exports.createSauces = (req, res) => {
     
 };
 
-exports.modifySauces =  (req, res, next) => {
+exports.modifySauces =  (req, res) => {
     const saucesObject = req.file ?{
-        ...JSON.parse(req.body.sauces),
-        imageURL: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        ...JSON.parse(req.body.sauce),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     }:{...req.body};
     delete saucesObject._userId;
     Sauces.findOne({_id: req.params.id})

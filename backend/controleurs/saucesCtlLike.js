@@ -2,22 +2,14 @@
 
 const Sauces = require('../models/Sauces');
 
-exports.createLike = (req, res) => {
-  
-    const likeObject = JSON.parse(req.body.sauce);
-    delete likeObject._id;
+exports.like = (req, res) => {
+    
+    Sauces.findOne({id: req.params.id})
+        .then((objet)=>{
+            if(!objet.usersLiked.includes(req.body.userId) && req.body.like === 1){
+                
+            }
+            res.status(200).json({message:'Avis enregistré'})})
+        .catch(error => res.status(400).json({ error })); 
+}
 
-    /* status like pour chaque utilisateur
-    pour +1(aime) 0(enleve like/dislike) -1(n'aime pas) 
-    prendre le user id  pour le like et dislike
-    user est ajoute ou retire du tableau appoprié
-    user => une seule valeur 
-    le nombre total de like et dislike est maj a chaque nouvelle notation*/
-    
-        
-    
-    /*like.save()
-         .then(()=>{res.status(200).json({message:''})})
-         .catch(error => {res.status(400).json({error})});*/
-     
- };
