@@ -1,4 +1,4 @@
-/*creation des différentes requetes pour les sauces*/
+/*creation des différentes routes pour les sauces et pour les likes/dislikes*/
 
 const express = require('express');
 const router = express.Router();

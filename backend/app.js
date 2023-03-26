@@ -1,4 +1,5 @@
-/*connexion à la base de donnee mongoose via des variables d environnement*/
+/*connexion à la base de donnee mongoose avec des variables d environnement pour la securisation du user, password et url*/
+/*creation du controle des acces dans le header des requêtes*/
 
 const express = require('express');
 const mongoose = require('mongoose');
