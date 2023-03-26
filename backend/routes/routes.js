@@ -9,12 +9,12 @@ const controllers = require('../controleurs/controleurs');
 const controllersLike = require('../controleurs/saucesCtlLike');
 
 router.post('/', auth, multer, controllers.createSauces);
-router.get('/', controllers.getAllSauces);
+router.get('/', auth, controllers.getAllSauces);
 router.get('/:id', auth, controllers.getOneSauces);
 router.put('/:id', auth, multer, controllers.modifySauces);
 router.delete('/:id', auth, controllers.deleteSauces);
 
-router.post('/:id/like', controllersLike.like);
+router.post('/:id/like', auth, controllersLike.like);
 
 
 module.exports = router;

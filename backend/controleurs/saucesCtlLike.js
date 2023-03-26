@@ -7,9 +7,30 @@ exports.like = (req, res) => {
     Sauces.findOne({id: req.params.id})
         .then((objet)=>{
             if(!objet.usersLiked.includes(req.body.userId) && req.body.like === 1){
-                
-            }
-            res.status(200).json({message:'Avis enregistré'})})
-        .catch(error => res.status(400).json({ error })); 
+                Sauces.updateOne(
+                    {id: req.params.id},
+                    {
+                        $inc:{likes: 1},
+                        $push:{usersLiked: req.body.userId}
+                    }
+
+                )
+                    .then(() => res.status(201).json({message:'Avis enregistré'}))
+                    .catch(error => res.status(400).json({ error }));
+            };
+            if(objet.usersLiked.includes(req.body.userId) && req.body.like === 0){
+                Sauces.updateOne(
+                    {id: req.params.id},
+                    {
+                        $inc:{likes: -1},
+                        $pull:{usersLiked: req.body.userId}
+                    }
+
+                )
+                    .then(() => res.status(201).json({message:'Avis enregistré'}))
+                    .catch(error => res.status(400).json({ error }));
+            };
+        })
+        .catch(error => res.status(404).json({ error })); 
 }
 
