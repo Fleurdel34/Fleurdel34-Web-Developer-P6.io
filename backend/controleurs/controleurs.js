@@ -15,7 +15,7 @@ exports.createSauces = (req, res) => {
    });
     sauces.save()
         .then(()=>{res.status(201).json({message:'Objet enregistré'})})
-        .catch(error => {res.status(400).json({error})});
+        .catch(() => {res.status(400).json({message:"Erreur lors de l'enregistrement de l'objet"})});
     
 };
 
@@ -37,11 +37,11 @@ exports.modifySauces =  (req, res) => {
 
                 Sauces.updateOne({_id: req.params.id}, {...saucesObject, _id: req.params.id })
                     .then(()=>{res.status(200).json({message:'Objet modifié'})})
-                    .catch(error => res.status(401).json({ error }));
+                    .catch(() => res.status(400).json({ message:"Erreur lors de la modification de l'objet" }));
 
             };
         })
-        .catch(error => res.status(400).json({ error }));
+        .catch(() => res.status(404).json({ message:'Erreur objet non trouvé' }));
 };
 
 exports.deleteSauces =  (req, res) => {
@@ -58,18 +58,18 @@ exports.deleteSauces =  (req, res) => {
                 fs.unlink(`images/${filename}`, () =>{
                     Sauces.deleteOne({_id: req.params.id})
                         .then(()=>{res.status(200).json({message:'Objet supprimé'})})
-                        .catch(error => res.status(401).json({ error }));
+                        .catch(() => res.status(400).json({ message:"Erreur lors de la supression de l'objet" }));
                 })
             };
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(() => res.status(404).json({ message:'Erreur objet non trouvée' }));
 };
 
 exports.getAllSauces = (req, res) => {
 
     Sauces.find()
         .then( sauces => res.status(200).json(sauces))
-        .catch(error => res.status(400).json({error}));
+        .catch(() => res.status(404).json({message:'Erreur liste objets non trouvée'}));
     
 };
 
@@ -77,5 +77,5 @@ exports.getOneSauces = (req, res) => {
 
     Sauces.findOne({_id: req.params.id})
         .then(sauces => res.status(200).json(sauces))
-        .catch(error => res.status(404).json({ error }));
+        .catch(() => res.status(404).json({ message:'Erreur objet non trouvé' }));
 };

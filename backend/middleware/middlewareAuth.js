@@ -2,11 +2,15 @@
 
 const tokenCtl = require('jsonwebtoken');
 
+const dotenv = require("dotenv");
+dotenv.config();
+process.env.SECRET_TOKEN
+
 module.exports= (req, res,next)=>{
 
     try{
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = tokenCtl.verify(token, 'RANDOM_TOKEN_KEY');
+        const decodedToken = tokenCtl.verify(token, process.env.SECRET_TOKEN);
         const userId = decodedToken.userId;
         req.auth = {
             userId: userId
@@ -14,7 +18,7 @@ module.exports= (req, res,next)=>{
         next();
     }
     catch(error){
-        res.status(401).json({error});
+        res.status(401).json({message: "identifiant ou mot de passe invalide"});
     }
 
 

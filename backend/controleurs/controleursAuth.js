@@ -2,6 +2,10 @@
 
 const Auth = require('../models/Auth');
 
+const dotenv = require("dotenv");
+dotenv.config();
+process.env.SECRET_TOKEN;
+
 const bcrypt = require('bcrypt');
 
 const tokenCtl = require('jsonwebtoken');
@@ -15,9 +19,9 @@ exports.signup = (req, res) => {
             });
             user.save()
                 .then(()=> res.status(201).json({message:'Utilisateur créé'}))
-                .catch(error => res.status(400).json({error}));
+                .catch(() => res.status(400).json({message:'Utilisateur non créé'}));
         })
-        .catch(error => res.status(500).json({error}));
+        .catch(() => res.status(500).json({message: 'le serveur a rencontré un probléme'}));
     
 };
 
@@ -44,14 +48,15 @@ exports.login = (req, res) => {
                             userId: user._id,
                             token: tokenCtl.sign(
                                 { userId: user._id },
-                                'RANDOM_TOKEN_KEY',
+                                process.env.SECRET_TOKEN,
                                 { expiresIn: '24h' }
                             )  
-                        });    
+                        });  
+                        console.log(secret);  
                     }
                 })
-                .catch(error => res.status(500).json({error}));
+                .catch(() => res.status(500).json({message: 'le serveur a rencontré un probléme'}));
         };
     })
-    .catch(error => res.status(500).json({error}));
+    .catch(() => res.status(500).json({message: 'le serveur a rencontré un probléme'}));
 };

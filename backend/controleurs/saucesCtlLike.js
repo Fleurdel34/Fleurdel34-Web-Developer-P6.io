@@ -16,7 +16,7 @@ exports.like = (req, res) => {
 
                 )
                     .then(() => res.status(201).json({message:'Avis enregistré'}))
-                    .catch(error => res.status(400).json({ error }));
+                    .catch(() => res.status(400).json({ message:'Erreur avis non mis à jour' }));
             };
             if(objet.usersLiked.includes(req.body.userId) && req.body.like === 0){
                 Sauces.updateOne(
@@ -28,7 +28,7 @@ exports.like = (req, res) => {
 
                 )
                     .then(() => res.status(201).json({message:'Avis supprimé'}))
-                    .catch(error => res.status(400).json({ error }));
+                    .catch(() => res.status(400).json({ message:'Erreur avis non supprimé' }));
             };
             if(!objet.usersDisliked.includes(req.body.userId) && req.body.like === -1){
                 Sauces.updateOne(
@@ -40,7 +40,7 @@ exports.like = (req, res) => {
 
                 )
                     .then(() => res.status(201).json({message:'Avis enregistré'}))
-                    .catch(error => res.status(400).json({ error }));
+                    .catch(() => res.status(400).json({ message:'Erreur avis non mis à jour'}));
             };
             if(objet.usersDisliked.includes(req.body.userId) && req.body.like === 0){
                 Sauces.updateOne(
@@ -52,9 +52,9 @@ exports.like = (req, res) => {
 
                 )
                     .then(() => res.status(201).json({message:'Avis enregistré'}))
-                    .catch(error => res.status(400).json({ error }));
+                    .catch(() => res.status(400).json({message:'Erreur avis non supprimé'}));
             };
         })
-        .catch(error => res.status(404).json({ error })); 
+        .catch(() => res.status(404).json({ message:'Objet non trouvé' })); 
 }
 
