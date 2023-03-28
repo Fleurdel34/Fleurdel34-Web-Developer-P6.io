@@ -2,9 +2,7 @@
 
 const Auth = require('../models/Auth');
 
-const dotenv = require("dotenv");
-dotenv.config();
-process.env.SECRET_TOKEN;
+require("dotenv").config();
 
 const bcrypt = require('bcrypt');
 
@@ -43,7 +41,7 @@ exports.login = (req, res) => {
                         res.status(401).json({message:'Identifiant ou mot de passe incorrect'});
 
                     }else{
-
+                        console.log(process.env.SECRET_TOKEN);
                         res.status(200).json({
                             userId: user._id,
                             token: tokenCtl.sign(
@@ -52,7 +50,7 @@ exports.login = (req, res) => {
                                 { expiresIn: '24h' }
                             )  
                         });  
-                        console.log(secret);  
+                          
                     }
                 })
                 .catch(() => res.status(500).json({message: 'le serveur a rencontré un probléme'}));

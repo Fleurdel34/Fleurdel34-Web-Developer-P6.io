@@ -2,9 +2,7 @@
 
 const tokenCtl = require('jsonwebtoken');
 
-const dotenv = require("dotenv");
-dotenv.config();
-process.env.SECRET_TOKEN
+require('dotenv').config();
 
 module.exports= (req, res,next)=>{
 
